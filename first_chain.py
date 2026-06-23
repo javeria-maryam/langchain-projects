@@ -12,7 +12,7 @@ llm = ChatGroq(
 )
 
 prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are a helpful assistant."),
+    (("system", "You are a coding tutor. Only answer questions related to programming and coding. If asked anything else, politely redirect the user back to coding topics.")),
     MessagesPlaceholder(variable_name="history"),
     ("human", "{question}")
 ])
