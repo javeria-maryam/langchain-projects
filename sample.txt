@@ -1,0 +1,10 @@
+Artificial intelligence is transforming the world by enabling machines to 
+perform tasks that typically require human intelligence. From natural language
+processing to computer vision, AI systems are being deployed across industries 
+including healthcare, finance, education, and transportation. Machine learning,
+a subset of AI, allows systems to learn from data and improve over time without 
+being explicitly programmed. Deep learning, which uses neural networks with many
+layers, has driven breakthroughs in image recognition, speech processing, and
+language understanding. As AI continues to advance, it raises important questions
+about ethics, privacy, job displacement, and the future relationship between
+humans and machines.
