@@ -56,3 +56,9 @@ while True:
     })
     
     print(f"Bot: {response.content}")
+
+    
+    print(f"\nSources:")
+    sources = set([chunk.metadata['source'] for chunk in relevant_chunks])
+    for source in sources:
+        print(f"  - {source}")
