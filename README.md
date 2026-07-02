@@ -52,3 +52,13 @@ pip install -r requirements.txt
 ```
 
 Add your API key to `.env`:
+
+GROQ_API_KEY=your_key_here
+
+## Tech Stack
+- LangChain
+- FAISS / ChromaDB
+- HuggingFace Embeddings (all-MiniLM-L6-v2)
+- Groq (LLaMA 3.1-8b-instant)
+- Python 3.13
+
