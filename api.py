@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from langchain_community.document_loaders import TextLoader
+from langchain_community.document_loaders import TextLoader, PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
@@ -14,9 +14,45 @@ load_dotenv()
 # Initialize FastAPI app
 app = FastAPI()
 
-# Setup RAG pipeline once when server starts
-loader = TextLoader("sample.txt")
-documents = loader.load()
+
+# Load all txt and pdf files in the folder
+documents = []
+loaded_files = []
+
+EXCLUDED_FILES = {"requirements.txt", ".env", "README.md", "app.py", "api.py", "rag.py", "rag_chroma.py", "chunking.py", "doc_loader.py", "evaluate.py", "first_chain.py"}
+
+for file in os.listdir("."):
+    if file in EXCLUDED_FILES:
+        continue
+    if file.endswith(".txt"):
+        try:
+            docs = TextLoader(file).load()
+            documents.extend(docs)
+            loaded_files.append(file)
+        except Exception as e:
+            print(f"Could not load {file}: {e}")
+    elif file.endswith(".pdf"):
+        try:
+            docs = PyPDFLoader(file).load()
+            documents.extend(docs)
+            loaded_files.append(file)
+        except Exception as e:
+            print(f"Could not load {file}: {e}")
+        try:
+            docs = TextLoader(file).load()
+            documents.extend(docs)
+            loaded_files.append(file)
+        except Exception as e:
+            print(f"Could not load {file}: {e}")
+    elif file.endswith(".pdf"):
+        try:
+            docs = PyPDFLoader(file).load()
+            documents.extend(docs)
+            loaded_files.append(file)
+        except Exception as e:
+            print(f"Could not load {file}: {e}")
+
+print(f"Loaded {len(documents)} document(s) from: {loaded_files}")
 
 splitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=20)
 chunks = splitter.split_documents(documents)
@@ -31,10 +67,13 @@ llm = ChatGroq(
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", """You are a helpful assistant.
-    Answer the question based only on the following context:
-    {context}
-    If the answer is not in the context, say 'I don't know based on the provided document.'"""),
-    ("human", "{question}")
+    Answer the question based ONLY on the following context.
+    If the context does not contain a clear, direct answer to the question,
+    you MUST respond with exactly: 'I don't know based on the provided documents.'
+    Do not infer, guess, or use outside knowledge.
+    
+    Context:
+    {context}"""),
 ])
 
 chain = prompt | llm
