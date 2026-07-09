@@ -138,6 +138,9 @@ when re-embedding large document sets would be too slow.
 Free tier with high rate limits. LLaMA 3.1-8b-instant is fast 
 and capable for Q&A tasks.
 
+## Live Demo
+👉 [Try it here](https://rag-document-assistant-u2t9ygqgpcwhqt6r6omoju.streamlit.app)
+
 ## Author
 
 Jaweria Maryam — [GitHub](https://github.com/javeria-maryam) | 
