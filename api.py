@@ -20,7 +20,7 @@ loaded_files = []
 EXCLUDED_FILES = {
     "requirements.txt", ".env", "README.md", "app.py",
     "api.py", "rag.py", "rag_chroma.py", "chunking.py",
-    "doc_loader.py", "evaluate.py", "first_chain.py"
+    "doc_loader.py", "evaluate.py", "first_chain.py", "requirements.docker.txt"
 }
 
 for file in os.listdir("."):
